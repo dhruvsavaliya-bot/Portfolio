@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ===============================
      TYPING EFFECT
   =============================== */
-  const roles = ["Website Developer", "Data Analyst"];
+  const roles = ["Web Developer", "Data Analyst"];
   let i = 0, j = 0, deleting = false;
   const text = document.getElementById("dynamic-text");
 
@@ -60,3 +60,4 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
   =============================== */
   
 });
+
