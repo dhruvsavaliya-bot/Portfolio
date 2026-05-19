@@ -1,4 +1,4 @@
- // Cursor
+// Cursor
   const dot = document.getElementById('cursorDot');
   const ring = document.getElementById('cursorRing');
   let mouseX=0, mouseY=0, ringX=0, ringY=0;
@@ -73,4 +73,59 @@
   }
   function closeMenu() {
     document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // ─── ROBOT SPEECH BUBBLE ────────────────────────────────
+  const robotMessages = [
+    "Hi! I'm Dhruv's AI buddy 🤖",
+    "Need a Python dev? Look no further!",
+    "I run on caffeine & clean code ☕",
+    "Let's build something amazing!",
+    "Beep boop... Loading awesomeness...",
+    "pip install dhruv → instant genius 🐍",
+    "404: Boring devs not found here!",
+    "My circuits say: hire this guy! ⚡",
+  ];
+
+  const bubble = document.getElementById('robotBubble');
+  const bubbleText = document.getElementById('bubbleText');
+  const bubbleCursor = document.querySelector('.bubble-cursor');
+
+  if (bubble && bubbleText) {
+    let msgIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let bubbleActive = false;
+
+    function typeBubble() {
+      const msg = robotMessages[msgIndex];
+      if (!isDeleting) {
+        charIndex++;
+        bubbleText.textContent = msg.slice(0, charIndex);
+        if (charIndex === msg.length) {
+          bubbleCursor.classList.add('hidden');
+          isDeleting = true;
+          setTimeout(typeBubble, 2600);
+          return;
+        }
+        setTimeout(typeBubble, 55);
+      } else {
+        charIndex--;
+        bubbleText.textContent = msg.slice(0, charIndex);
+        if (charIndex === 0) {
+          bubbleCursor.classList.remove('hidden');
+          isDeleting = false;
+          msgIndex = (msgIndex + 1) % robotMessages.length;
+          setTimeout(typeBubble, 400);
+          return;
+        }
+        setTimeout(typeBubble, 28);
+      }
+    }
+
+    // Show bubble after a short delay (feels like the robot "woke up")
+    setTimeout(() => {
+      bubble.classList.add('visible');
+      typeBubble();
+    }, 1800);
   }

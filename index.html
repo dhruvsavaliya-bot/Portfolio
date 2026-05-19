@@ -58,47 +58,313 @@
     <div class="circle"></div>
     <div class="grid-lines"></div>
   </div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="dot"></span>
-      Available for Opportunities
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Available for Opportunities
+      </div>
+      <h1 class="hero-name">
+        Savaliya<br/>
+        <span class="gold">Dhruv</span>
+      </h1>
+      <p class="hero-title">
+        <span id="typewriter"></span><span class="type-cursor">|</span>
+      </p>
+      <p class="hero-desc">
+        Results-driven Python &amp; AI Developer crafting scalable backend systems, intelligent data pipelines, and full-stack solutions. Turning complex problems into elegant code.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary"><span>View My Work</span> <i class="fas fa-arrow-right"></i></a>
+        <a href="mailto:dhruvsavaliya1306@gmail.com" class="btn-outline"><i class="fab fa-google"></i> Get In Touch</a>
+      </div>
+      <div class="hero-socials">
+        <a href="mailto:dhruvsavaliya1306@gmail.com" class="hero-social-icon gmail-icon" title="Gmail">
+          <i class="fab fa-google"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/dhruv-savaliya-9aa705348/" target="_blank" rel="noopener" class="hero-social-icon linkedin-icon" title="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://github.com/dhruvsavaliya-bot" target="_blank" rel="noopener" class="hero-social-icon github-icon" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="tel:+918153828954" class="hero-social-icon phone-icon" title="Call">
+          <i class="fas fa-phone"></i>
+        </a>
+        <span class="hero-social-sep"></span>
+        <span class="hero-social-label">Find me on</span>
+      </div>
     </div>
-    <h1 class="hero-name">
-      Savaliya<br/>
-      <span class="gold">Dhruv</span>
-    </h1>
-    <p class="hero-title">
-      <span id="typewriter"></span><span class="type-cursor">|</span>
-    </p>
-    <p class="hero-desc">
-      Results-driven Python &amp; AI Developer crafting scalable backend systems, intelligent data pipelines, and full-stack solutions. Turning complex problems into elegant code.
-    </p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary"><span>View My Work</span> <i class="fas fa-arrow-right"></i></a>
-      <a href="mailto:dhruvsavaliya1306@gmail.com" class="btn-outline"><i class="fab fa-google"></i> Get In Touch</a>
-    </div>
-    <div class="hero-socials">
-      <a href="mailto:dhruvsavaliya1306@gmail.com" class="hero-social-icon gmail-icon" title="Gmail">
-        <i class="fab fa-google"></i>
-      </a>
-      <a href="https://www.linkedin.com/in/dhruv-savaliya-9aa705348/" target="_blank" rel="noopener" class="hero-social-icon linkedin-icon" title="LinkedIn">
-        <i class="fab fa-linkedin-in"></i>
-      </a>
-      <a href="https://github.com/dhruvsavaliya-bot" target="_blank" rel="noopener" class="hero-social-icon github-icon" title="GitHub">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="tel:+918153828954" class="hero-social-icon phone-icon" title="Call">
-        <i class="fas fa-phone"></i>
-      </a>
-      <span class="hero-social-sep"></span>
-      <span class="hero-social-label">Find me on</span>
+
+    <!-- 3D Model Viewer -->
+    <div class="hero-3d" id="hero3d">
+      <canvas id="glbCanvas"></canvas>
+
+      <!-- Speech Bubble -->
+      <div class="robot-bubble" id="robotBubble">
+        <span class="bubble-text" id="bubbleText"></span>
+        <span class="bubble-cursor">▌</span>
+      </div>
+
+      <div class="model-hint"><i class="fas fa-sync-alt"></i> Drag to rotate</div>
+      <div class="model-glow"></div>
     </div>
   </div>
+
   <div class="hero-scroll">
     <span>Scroll</span>
     <div class="scroll-line"></div>
   </div>
 </section>
+
+<!-- Three.js + GLTFLoader -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ─── GLB 3D VIEWER ──────────────────────────────────────
+(function() {
+  const container = document.getElementById('hero3d');
+  const canvas = document.getElementById('glbCanvas');
+  if (!container || !canvas) return;
+
+  // Scene
+  const scene = new THREE.Scene();
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
+  renderer.setClearColor(0x000000, 0);
+
+  // Camera
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 1000);
+  camera.position.set(0, 0, 3);
+
+  // Lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambientLight);
+  const dirLight = new THREE.DirectionalLight(0xd4a853, 1.5);
+  dirLight.position.set(3, 5, 3);
+  scene.add(dirLight);
+  const rimLight = new THREE.DirectionalLight(0x00b4d8, 0.8);
+  rimLight.position.set(-3, -2, -3);
+  scene.add(rimLight);
+  const fillLight = new THREE.PointLight(0xffffff, 0.4, 20);
+  fillLight.position.set(0, 3, 2);
+  scene.add(fillLight);
+
+  // Resize
+  function resize() {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  let model = null;
+  let autoRotate = true;
+  function loadGLTFLoader(cb) {
+   
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
+    s.onload = cb;
+    document.head.appendChild(s);
+  }
+
+  loadGLTFLoader(function() {
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+      'models/glb100k.glb',
+      function(gltf) {
+        model = gltf.scene;
+
+        // Step 1: compute bounding box BEFORE scaling
+        const box = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
+
+        // Step 2: scale so the tallest dimension fits nicely
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 2.0 / maxDim;
+        model.scale.setScalar(scale);
+
+        // Step 3: recompute box AFTER scaling, then center
+        const scaledBox = new THREE.Box3().setFromObject(model);
+        const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
+        model.position.set(-scaledCenter.x, -scaledCenter.y, -scaledCenter.z);
+
+        // Step 4: pull camera back enough to see the whole model
+        const scaledSize = scaledBox.getSize(new THREE.Vector3());
+        const maxScaled = Math.max(scaledSize.x, scaledSize.y, scaledSize.z);
+        const fovRad = camera.fov * (Math.PI / 180);
+        const dist = (maxScaled / 2) / Math.tan(fovRad / 2) * 1.5;
+        camera.position.set(0, 0, dist);
+        camera.lookAt(0, 0, 0);
+
+        // DEBUG: log all mesh/bone names
+        console.log('=== GLB PARTS ===');
+        model.traverse(child => {
+          if (child.isMesh || child.isBone || child.isObject3D) {
+            console.log(child.type, '|', child.name);
+          }
+        });
+        console.log('=== END GLB PARTS ===');
+        const parts = {};
+        model.traverse(child => {
+          const name = child.name.toLowerCase();
+          // Head / visor
+          if (name.includes('head') || name.includes('visor') || name.includes('face'))     parts.head = parts.head || child;
+          // Arms
+          if (name.includes('arm') && (name.includes('left')  || name.includes('_l')))      parts.armL = parts.armL || child;
+          if (name.includes('arm') && (name.includes('right') || name.includes('_r')))      parts.armR = parts.armR || child;
+          // Hands
+          if ((name.includes('hand') || name.includes('claw')) && (name.includes('left')  || name.includes('_l')))  parts.handL = parts.handL || child;
+          if ((name.includes('hand') || name.includes('claw')) && (name.includes('right') || name.includes('_r')))  parts.handR = parts.handR || child;
+          // Legs / feet
+          if ((name.includes('leg') || name.includes('foot') || name.includes('boot')) && (name.includes('left')  || name.includes('_l'))) parts.legL = parts.legL || child;
+          if ((name.includes('leg') || name.includes('foot') || name.includes('boot')) && (name.includes('right') || name.includes('_r'))) parts.legR = parts.legR || child;
+          // Torso / body / chest
+          if (name.includes('torso') || name.includes('body') || name.includes('chest') || name.includes('trunk')) parts.torso = parts.torso || child;
+          // Eye(s)
+          if (name.includes('eye') && (name.includes('left')  || name.includes('_l')))  parts.eyeL = parts.eyeL || child;
+          if (name.includes('eye') && (name.includes('right') || name.includes('_r')))  parts.eyeR = parts.eyeR || child;
+        });
+
+        // Store base rotations / positions
+        const base = {};
+        Object.entries(parts).forEach(([k, m]) => {
+          base[k] = {
+            rx: m.rotation.x, ry: m.rotation.y, rz: m.rotation.z,
+            px: m.position.x, py: m.position.y, pz: m.position.z,
+            sx: m.scale.x,    sy: m.scale.y,    sz: m.scale.z,
+          };
+        });
+        model._parts = parts;
+        model._base  = base;
+
+        scene.add(model);
+        container.classList.add('loaded');
+      },
+      function(xhr) {
+        const pct = Math.round(xhr.loaded / xhr.total * 100);
+        const hint = container.querySelector('.model-hint');
+        if (hint && xhr.total) hint.textContent = 'Loading ' + pct + '%';
+      },
+      function(err) {
+        console.warn('GLB load error:', err);
+        container.querySelector('.model-hint').textContent = '3D model';
+      }
+    );
+  });
+
+  // Mouse drag rotation
+  let isDragging = false, prevX = 0, prevY = 0;
+  let rotX = 0, rotY = 0;
+  canvas.addEventListener('mousedown', e => { isDragging = true; prevX = e.clientX; prevY = e.clientY; autoRotate = false; });
+  window.addEventListener('mouseup', () => { isDragging = false; });
+  window.addEventListener('mousemove', e => {
+    if (!isDragging || !model) return;
+    rotY += (e.clientX - prevX) * 0.012;
+    rotX += (e.clientY - prevY) * 0.012;
+    rotX = Math.max(-1.2, Math.min(1.2, rotX));
+    prevX = e.clientX; prevY = e.clientY;
+  });
+  // Touch
+  canvas.addEventListener('touchstart', e => { isDragging = true; prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; autoRotate = false; }, {passive:true});
+  window.addEventListener('touchend', () => { isDragging = false; });
+  window.addEventListener('touchmove', e => {
+    if (!isDragging || !model) return;
+    rotY += (e.touches[0].clientX - prevX) * 0.012;
+    rotX += (e.touches[0].clientY - prevY) * 0.012;
+    rotX = Math.max(-1.2, Math.min(1.2, rotX));
+    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+  }, {passive:true});
+
+  // ── Helpers ──────────────────────────────────────────────
+  const sin = (t, speed, amp, phase=0) => Math.sin(t * speed + phase) * amp;
+  const cos = (t, speed, amp, phase=0) => Math.cos(t * speed + phase) * amp;
+
+  // Animate
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.016; // ~60fps increments
+
+    if (model) {
+      const p = model._parts || {};
+      const b = model._base  || {};
+
+      // ── 1. Whole-body gentle float + slight sway ─────────
+      const floatY  = sin(t, 1.1, 0.07);
+      const swayX   = sin(t, 0.7, 0.012);
+      model.position.y = (model._baseY || 0) + floatY;
+      model.rotation.z = swayX;
+
+      if (!model._baseY && model._baseY !== 0) model._baseY = model.position.y;
+
+      // Auto-rotate (slow)
+      if (autoRotate) rotY += 0.005;
+      model.rotation.y = rotY;
+      model.rotation.x = rotX;
+
+      // ── 2. Head: nod + side tilt + slight look-around ────
+      if (p.head) {
+        const nod   = sin(t, 0.9,  0.08);
+        const tilt  = sin(t, 0.55, 0.06, 1.2);
+        const look  = sin(t, 0.4,  0.05, 2.5);
+        p.head.rotation.x = (b.head?.rx || 0) + nod;
+        p.head.rotation.z = (b.head?.rz || 0) + tilt;
+        p.head.rotation.y = (b.head?.ry || 0) + look;
+      }
+
+      // ── 3. Arms: opposite swing like idle walk ────────────
+      if (p.armL) {
+        p.armL.rotation.x = (b.armL?.rx || 0) + sin(t, 1.2, 0.22, 0);
+        p.armL.rotation.z = (b.armL?.rz || 0) + sin(t, 0.6, 0.08, 0);
+      }
+      if (p.armR) {
+        p.armR.rotation.x = (b.armR?.rx || 0) + sin(t, 1.2, 0.22, Math.PI); // opposite phase
+        p.armR.rotation.z = (b.armR?.rz || 0) + sin(t, 0.6, 0.08, Math.PI);
+      }
+
+      // ── 4. Hands / claws: little wiggle ──────────────────
+      if (p.handL) {
+        p.handL.rotation.z = (b.handL?.rz || 0) + sin(t, 2.2, 0.12, 0.5);
+      }
+      if (p.handR) {
+        p.handR.rotation.z = (b.handR?.rz || 0) + sin(t, 2.2, 0.12, 2.0);
+      }
+
+      // ── 5. Legs: gentle kick swing ────────────────────────
+      if (p.legL) {
+        p.legL.rotation.x = (b.legL?.rx || 0) + sin(t, 1.1, 0.18, 0.3);
+      }
+      if (p.legR) {
+        p.legR.rotation.x = (b.legR?.rx || 0) + sin(t, 1.1, 0.18, 0.3 + Math.PI);
+      }
+
+      // ── 6. Torso: breathing scale + subtle twist ──────────
+      if (p.torso) {
+        const breath = 1 + sin(t, 0.8, 0.018);
+        p.torso.scale.set(
+          (b.torso?.sx || 1) * breath,
+          (b.torso?.sy || 1) * breath,
+          (b.torso?.sz || 1) * breath
+        );
+        p.torso.rotation.y = (b.torso?.ry || 0) + sin(t, 0.45, 0.04, 0.8);
+      }
+
+      // ── 7. Eye glow pulse (scale) ─────────────────────────
+      const eyePulse = 1 + sin(t, 3.0, 0.12);
+      if (p.eyeL) p.eyeL.scale.setScalar((b.eyeL?.sx || 1) * eyePulse);
+      if (p.eyeR) p.eyeR.scale.setScalar((b.eyeR?.sx || 1) * eyePulse);
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
 
 <!-- ─── ABOUT ─────────────────────────────────────── -->
 <section id="about">
