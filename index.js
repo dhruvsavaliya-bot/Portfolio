@@ -48,11 +48,19 @@
     document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
   });
 
-  // Scroll reveal
+  // Scroll reveal — handles all animation variants
+  const revealEls = document.querySelectorAll(
+    '.reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-pop, .reveal-flip, .reveal-rotate'
+  );
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target); // animate once
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  revealEls.forEach(el => observer.observe(el));
 
   // Skill bars
   const skillObserver = new IntersectionObserver(entries => {
@@ -74,6 +82,80 @@
   function closeMenu() {
     document.getElementById('mobileMenu').classList.remove('open');
   }
+
+
+
+  // ─── MOUSE ORB ─────────────────────────────────────────
+  (function() {
+    const orb   = document.getElementById('scrollOrb');
+    const core  = orb?.querySelector('.orb-core');
+    const rings = orb?.querySelectorAll('.orb-ring');
+    const label = document.getElementById('orbLabel');
+    if (!orb) return;
+
+    const sections = [
+      { id: 'hero',         color: '#d4a853', name: 'Home'         },
+      { id: 'about',        color: '#00b4d8', name: 'About'        },
+      { id: 'skills',       color: '#a78bfa', name: 'Skills'       },
+      { id: 'experience',   color: '#34d399', name: 'Experience'   },
+      { id: 'projects',     color: '#f472b6', name: 'Projects'     },
+      { id: 'certificates', color: '#fb923c', name: 'Certificates' },
+      { id: 'education',    color: '#60a5fa', name: 'Education'    },
+      { id: 'achievements', color: '#facc15', name: 'Achievements' },
+      { id: 'contact',      color: '#4ade80', name: 'Contact'      },
+    ];
+
+    function setOrbColor(color, name) {
+      orb.style.setProperty('--orb-color', color);
+      if (core) {
+        core.style.background = color;
+        core.style.boxShadow  = `0 0 24px 8px ${color}`;
+      }
+      if (rings) rings.forEach(r => r.style.borderColor = color);
+      if (label) { label.textContent = name; label.style.color = color; }
+    }
+
+    // Get which section the mouse is currently inside
+    function getSectionAtY(pageY) {
+      let active = sections[0];
+      sections.forEach(s => {
+        const el = document.getElementById(s.id);
+        if (!el) return;
+        if (pageY >= el.offsetTop - 60) active = s;
+      });
+      return active;
+    }
+
+    // Mouse position (page coords)
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.scrollY + window.innerHeight / 2;
+    let orbX   = mouseX;
+    let orbY   = mouseY - window.scrollY;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY + window.scrollY; // page Y
+      const s = getSectionAtY(mouseY);
+      setOrbColor(s.color, s.name);
+    });
+
+    // Init
+    setOrbColor(sections[0].color, sections[0].name);
+    orb.style.left = orbX + 'px';
+    orb.style.top  = orbY + 'px';
+
+    // Smooth follow loop
+    function loop() {
+      const targetX = mouseX;
+      const targetY = mouseY - window.scrollY; // back to viewport Y
+      orbX += (targetX - orbX) * 0.1;
+      orbY += (targetY - orbY) * 0.1;
+      orb.style.left = orbX + 'px';
+      orb.style.top  = orbY + 'px';
+      requestAnimationFrame(loop);
+    }
+    loop();
+  })();
 
   // ─── ROBOT SPEECH BUBBLE ────────────────────────────────
   const robotMessages = [
