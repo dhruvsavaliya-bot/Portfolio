@@ -4,6 +4,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Savaliya Dhruv — Python & AI Developer</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' ry='14' fill='%230b1628'/%3E%3Ctext x='50%25' y='52%25' font-family='Segoe UI,Arial,sans-serif' font-size='32' fill='%23d4a853' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3ESD%3C/text%3E%3C/svg%3E" />
+<meta property="og:title" content="Savaliya Dhruv — Python & AI Developer" />
+<meta property="og:description" content="Building scalable Python backends, AI pipelines, and modern web apps with a focus on clean code and measurable impact." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://yourdomain.com/" />
+<meta property="og:image" content="https://yourdomain.com/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Savaliya Dhruv — Python & AI Developer" />
+<meta name="twitter:description" content="Building scalable Python backends, AI pipelines, and modern web apps with a focus on clean code and measurable impact." />
+<meta name="twitter:image" content="https://yourdomain.com/assets/og-image.png" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <link rel="stylesheet" href="style.css"/>
@@ -34,6 +46,7 @@
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" type="button"><i class="fas fa-moon"></i></button>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
@@ -71,12 +84,17 @@
       <p class="hero-title">
         <span id="typewriter"></span><span class="type-cursor">|</span>
       </p>
+      <div class="hero-ticker">
+        <span class="ticker-label">Now building:</span>
+        <span class="ticker-text" id="tickerText">Expense Tracker for Modern Teams</span>
+      </div>
       <p class="hero-desc">
         Results-driven Python &amp; AI Developer crafting scalable backend systems, intelligent data pipelines, and full-stack solutions. Turning complex problems into elegant code.
       </p>
       <div class="hero-cta">
         <a href="#projects" class="btn-primary"><span>View My Work</span> <i class="fas fa-arrow-right"></i></a>
         <a href="mailto:dhruvsavaliya1306@gmail.com" class="btn-outline"><i class="fab fa-google"></i> Get In Touch</a>
+        <a href="assets/Dhruv_Savaliya_.pdf" target="_blank" download class="btn-outline"><i class="fas fa-file-pdf"></i> Resume</a>
       </div>
       <div class="hero-socials">
         <a href="mailto:dhruvsavaliya1306@gmail.com" class="hero-social-icon gmail-icon" title="Gmail">
@@ -365,7 +383,7 @@
   animate();
 })();
 </script>
-
+<!-- ─── ABOUT ─────────────────────────────────────── -->
 <!-- ─── ABOUT ─────────────────────────────────────── -->
 <section id="about">
   <div class="section-label">01 — About</div>
@@ -688,6 +706,21 @@
   <h2 class="section-title">Let's <span class="accent">Connect</span></h2>
   <p class="contact-intro">Have a project in mind, want to collaborate, or just want to say hello? My inbox is always open. I'll get back to you as soon as I can.</p>
 
+  <div class="contact-form-wrapper reveal">
+    <form id="contactForm" class="contact-form" onsubmit="return submitContactForm(event)">
+      <div class="form-header">
+        <div class="form-title">Contact Me Directly</div>
+        <div class="form-copy">Send a message right from the page, then I'll reply straight to your inbox.</div>
+      </div>
+      <div class="form-fields">
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Your email" required />
+        <textarea name="message" rows="5" placeholder="Describe your project or question" required></textarea>
+        <button type="submit" class="btn-primary">Send Message</button>
+      </div>
+    </form>
+  </div>
+
   <div class="contact-grid">
     <!-- Gmail -->
     <a href="mailto:dhruvsavaliya1306@gmail.com" class="contact-card gmail reveal">
@@ -734,21 +767,6 @@
     </a>
   </div>
 
-  <!-- Social icon row -->
-  <div class="social-row reveal">
-    <a href="mailto:dhruvsavaliya1306@gmail.com" class="social-btn sb-gmail" title="Email / Gmail">
-      <i class="fab fa-google"></i>
-    </a>
-    <a href="https://www.linkedin.com/in/dhruv-savaliya-9aa705348/" target="_blank" rel="noopener" class="social-btn sb-linkedin" title="LinkedIn">
-      <i class="fab fa-linkedin-in"></i>
-    </a>
-    <a href="https://github.com/dhruvsavaliya-bot" target="_blank" rel="noopener" class="social-btn sb-github" title="GitHub">
-      <i class="fab fa-github"></i>
-    </a>
-    <a href="tel:+918153828954" class="social-btn sb-phone" title="Phone">
-      <i class="fas fa-phone"></i>
-    </a>
-  </div>
 </section>
 
 <!-- ─── FOOTER ─────────────────────────────────────── -->

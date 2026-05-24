@@ -37,16 +37,54 @@
   }
   type();
 
+  const tickerText = document.getElementById('tickerText');
+  const tickerItems = [
+    'Stay tuned for my upcoming projects!',
+
+  ];
+  let tickerIndex = 0;
+  function updateTicker() {
+    if (!tickerText) return;
+    tickerText.textContent = tickerItems[tickerIndex];
+    tickerIndex = (tickerIndex + 1) % tickerItems.length;
+  }
+  updateTicker();
+  setInterval(updateTicker, 3600);
+
   // Nav scroll
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 60);
+    updateActiveNav();
     // Progress bar
     const total = document.body.scrollHeight - window.innerHeight;
     document.getElementById('progressBar').style.width = (window.scrollY / total * 100) + '%';
     // Back to top
     document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
   });
+  
+  function updateActiveNav() {
+    const links = document.querySelectorAll('#navbar .nav-links a, .mobile-menu a');
+    const sections = Array.from(links)
+      .map(link => {
+        const id = link.getAttribute('href');
+        return id && id.startsWith('#') ? document.querySelector(id) : null;
+      })
+      .filter(Boolean);
+    const currentScroll = window.scrollY + 120;
+    let activeId = null;
+    sections.forEach(section => {
+      if (section.offsetTop <= currentScroll) activeId = section.id;
+    });
+    links.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href === `#${activeId}`) link.classList.add('active');
+      else link.classList.remove('active');
+    });
+  }
+  updateActiveNav();
+  window.addEventListener('load', updateActiveNav);
+  updateActiveNav();
 
   // Scroll reveal — handles all animation variants
   const revealEls = document.querySelectorAll(
@@ -210,4 +248,56 @@
       bubble.classList.add('visible');
       typeBubble();
     }, 1800);
+  }
+
+
+  // Theme toggle (light / dark) with persistence
+  (function(){
+    const toggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    const stored = localStorage.getItem('theme');
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+
+    function applyTheme(t) {
+      if (t === 'light') root.classList.add('light-theme');
+      else root.classList.remove('light-theme');
+      if (toggle) {
+        toggle.innerHTML = t === 'light' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        toggle.setAttribute('aria-pressed', t === 'light');
+      }
+    }
+
+    const initial = stored || (prefersLight ? 'light' : 'dark');
+    applyTheme(initial);
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const next = root.classList.contains('light-theme') ? 'dark' : 'light';
+        applyTheme(next);
+        localStorage.setItem('theme', next);
+      });
+    }
+
+    // If user changes OS theme, respect if they haven't set a preference
+    if (!stored && window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+        applyTheme(e.matches ? 'light' : 'dark');
+      });
+    }
+  })();
+
+  function submitContactForm(event) {
+    event.preventDefault();
+    const form = document.getElementById('contactForm');
+    if (!form) return false;
+    const name = form.elements.name.value.trim();
+    const email = form.elements.email.value.trim();
+    const message = form.elements.message.value.trim();
+    if (!name || !email || !message) return false;
+    const subject = encodeURIComponent(`Contact from ${name}`);
+    const bodyText = `Name: ${name}\r\nEmail: ${email}\r\n\r\n${message}`;
+    const body = encodeURIComponent(bodyText).replace(/%0A/g, '%0D%0A');
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=dhruvsavaliya1306@gmail.com&su=${subject}&body=${body}`;
+    window.open(gmailUrl, '_blank');
+    return false;
   }
