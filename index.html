@@ -77,7 +77,11 @@
         <span class="dot"></span>
         Available for Opportunities
       </div>
-      <h1 class="hero-name">
+      <button id="aiModeToggle" class="ai-mode-btn" aria-label="Toggle AI mode" type="button">
+        <i class="fas fa-robot"></i>
+        <span>AI Mode</span>
+      </button>  
+        <h1 class="hero-name">
         Savaliya<br/>
         <span class="gold">Dhruv</span>
       </h1>
@@ -121,7 +125,12 @@
       <!-- Speech Bubble -->
       <div class="robot-bubble" id="robotBubble">
         <span class="bubble-text" id="bubbleText"></span>
+        <span class="thinking-dots" id="thinkingDots"><span></span><span></span><span></span></span>
         <span class="bubble-cursor">▌</span>
+      </div>
+
+      <div class="ai-mode-indicator" id="aiIndicator">
+        <i class="fas fa-brain"></i> AI Mode Active
       </div>
 
       <div class="model-hint"><i class="fas fa-sync-alt"></i> Drag to rotate</div>

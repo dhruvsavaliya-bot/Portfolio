@@ -210,6 +210,7 @@
   const bubble = document.getElementById('robotBubble');
   const bubbleText = document.getElementById('bubbleText');
   const bubbleCursor = document.querySelector('.bubble-cursor');
+  const thinkingDots = document.getElementById('thinkingDots');
 
   if (bubble && bubbleText) {
     let msgIndex = 0;
@@ -225,7 +226,7 @@
         if (charIndex === msg.length) {
           bubbleCursor.classList.add('hidden');
           isDeleting = true;
-          setTimeout(typeBubble, 2600);
+          setTimeout(typeBubble, 2200);
           return;
         }
         setTimeout(typeBubble, 55);
@@ -236,6 +237,17 @@
           bubbleCursor.classList.remove('hidden');
           isDeleting = false;
           msgIndex = (msgIndex + 1) % robotMessages.length;
+          // Show thinking dots briefly before next message
+          if (thinkingDots) {
+            bubbleCursor.style.display = 'none';
+            thinkingDots.classList.add('active');
+            setTimeout(() => {
+              thinkingDots.classList.remove('active');
+              bubbleCursor.style.display = '';
+              typeBubble();
+            }, 900);
+            return;
+          }
           setTimeout(typeBubble, 400);
           return;
         }
@@ -284,6 +296,57 @@
         applyTheme(e.matches ? 'light' : 'dark');
       });
     }
+  })();
+
+  // ─── AI MODE TOGGLE ──────────────────────────────────────
+  (function(){
+    const toggle = document.getElementById('aiModeToggle');
+    const root = document.documentElement;
+    const stored = localStorage.getItem('aiMode');
+
+    function applyAiMode(on) {
+      if (on) {
+        root.classList.add('ai-mode');
+        toggle?.classList.add('active');
+        toggle?.querySelector('i')?.classList.replace('fa-robot', 'fa-brain');
+      } else {
+        root.classList.remove('ai-mode');
+        toggle?.classList.remove('active');
+        toggle?.querySelector('i')?.classList.replace('fa-brain', 'fa-robot');
+      }
+    }
+
+    applyAiMode(stored === 'true');
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const next = !root.classList.contains('ai-mode');
+        applyAiMode(next);
+        localStorage.setItem('aiMode', next);
+      });
+    }
+  })();
+
+  // ─── CARD MOUSE PARALLAX ────────────────────────────────
+  (function() {
+    const cards = document.querySelectorAll('.project-card, .skill-category, .ach-card');
+    cards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / centerY * -3;
+        const rotateY = (x - centerX) / centerX * 3;
+        card.style.setProperty('--rx', rotateX + 'deg');
+        card.style.setProperty('--ry', rotateY + 'deg');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
   })();
 
   function submitContactForm(event) {
