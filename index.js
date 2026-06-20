@@ -39,8 +39,10 @@
 
   const tickerText = document.getElementById('tickerText');
   const tickerItems = [
-    'Stay tuned for my upcoming projects!',
-
+    'Company Lookup Tool — AI-powered company intelligence',
+    'Industry Categorizer — automatic industry classification',
+    'Expense Tracker for Modern Teams',
+    'Fault Detection System with ML',
   ];
   let tickerIndex = 0;
   function updateTicker() {
@@ -120,6 +122,9 @@
   function closeMenu() {
     document.getElementById('mobileMenu').classList.remove('open');
   }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMenu();
+  });
 
 
 
@@ -298,35 +303,6 @@
     }
   })();
 
-  // ─── AI MODE TOGGLE ──────────────────────────────────────
-  (function(){
-    const toggle = document.getElementById('aiModeToggle');
-    const root = document.documentElement;
-    const stored = localStorage.getItem('aiMode');
-
-    function applyAiMode(on) {
-      if (on) {
-        root.classList.add('ai-mode');
-        toggle?.classList.add('active');
-        toggle?.querySelector('i')?.classList.replace('fa-robot', 'fa-brain');
-      } else {
-        root.classList.remove('ai-mode');
-        toggle?.classList.remove('active');
-        toggle?.querySelector('i')?.classList.replace('fa-brain', 'fa-robot');
-      }
-    }
-
-    applyAiMode(stored === 'true');
-
-    if (toggle) {
-      toggle.addEventListener('click', () => {
-        const next = !root.classList.contains('ai-mode');
-        applyAiMode(next);
-        localStorage.setItem('aiMode', next);
-      });
-    }
-  })();
-
   // ─── CARD MOUSE PARALLAX ────────────────────────────────
   (function() {
     const cards = document.querySelectorAll('.project-card, .skill-category, .ach-card');
@@ -361,6 +337,10 @@
     const bodyText = `Name: ${name}\r\nEmail: ${email}\r\n\r\n${message}`;
     const body = encodeURIComponent(bodyText).replace(/%0A/g, '%0D%0A');
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=dhruvsavaliya1306@gmail.com&su=${subject}&body=${body}`;
-    window.open(gmailUrl, '_blank');
+    const mailtoLink = `mailto:dhruvsavaliya1306@gmail.com?subject=${subject}&body=${body}`;
+    var win = window.open(gmailUrl, '_blank');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      window.location.href = mailtoLink;
+    }
     return false;
   }

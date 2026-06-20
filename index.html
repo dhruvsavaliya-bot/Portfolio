@@ -16,6 +16,28 @@
 <meta name="twitter:title" content="Savaliya Dhruv — Python & AI Developer" />
 <meta name="twitter:description" content="Building scalable Python backends, AI pipelines, and modern web apps with a focus on clean code and measurable impact." />
 <meta name="twitter:image" content="https://yourdomain.com/assets/og-image.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Savaliya Dhruv",
+  "jobTitle": "Python & AI Developer",
+  "url": "https://yourdomain.com/",
+  "email": "dhruvsavaliya1306@gmail.com",
+  "telephone": "+918153828954",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Junagadh",
+    "addressCountry": "India"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/dhruv-savaliya-9aa705348/",
+    "https://github.com/dhruvsavaliya-bot"
+  ],
+  "knowsAbout": ["Python", "Flask", "React", "Pandas", "MySQL", "Power BI", "AI"],
+  "alumniOf": "Shree Maneklal M. Patel Institute of Science and Research"
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <link rel="stylesheet" href="style.css"/>
@@ -77,10 +99,7 @@
         <span class="dot"></span>
         Available for Opportunities
       </div>
-      <button id="aiModeToggle" class="ai-mode-btn" aria-label="Toggle AI mode" type="button">
-        <i class="fas fa-robot"></i>
-        <span>AI Mode</span>
-      </button>  
+      
         <h1 class="hero-name">
         Savaliya<br/>
         <span class="gold">Dhruv</span>
@@ -101,16 +120,16 @@
         <a href="assets/Dhruv_Savaliya_.pdf" target="_blank" download class="btn-outline"><i class="fas fa-file-pdf"></i> Resume</a>
       </div>
       <div class="hero-socials">
-        <a href="mailto:dhruvsavaliya1306@gmail.com" class="hero-social-icon gmail-icon" title="Gmail">
+        <a href="mailto:dhruvsavaliya1306@gmail.com" class="hero-social-icon gmail-icon" title="Gmail" aria-label="Send email to Dhruv">
           <i class="fab fa-google"></i>
         </a>
-        <a href="https://www.linkedin.com/in/dhruv-savaliya-9aa705348/" target="_blank" rel="noopener" class="hero-social-icon linkedin-icon" title="LinkedIn">
+        <a href="https://www.linkedin.com/in/dhruv-savaliya-9aa705348/" target="_blank" rel="noopener" class="hero-social-icon linkedin-icon" title="LinkedIn" aria-label="View Dhruv's LinkedIn profile">
           <i class="fab fa-linkedin-in"></i>
         </a>
-        <a href="https://github.com/dhruvsavaliya-bot" target="_blank" rel="noopener" class="hero-social-icon github-icon" title="GitHub">
+        <a href="https://github.com/dhruvsavaliya-bot" target="_blank" rel="noopener" class="hero-social-icon github-icon" title="GitHub" aria-label="View Dhruv's GitHub profile">
           <i class="fab fa-github"></i>
         </a>
-        <a href="tel:+918153828954" class="hero-social-icon phone-icon" title="Call">
+        <a href="tel:+918153828954" class="hero-social-icon phone-icon" title="Call" aria-label="Call Dhruv at +918153828954">
           <i class="fas fa-phone"></i>
         </a>
         <span class="hero-social-sep"></span>
@@ -129,10 +148,6 @@
         <span class="bubble-cursor">▌</span>
       </div>
 
-      <div class="ai-mode-indicator" id="aiIndicator">
-        <i class="fas fa-brain"></i> AI Mode Active
-      </div>
-
       <div class="model-hint"><i class="fas fa-sync-alt"></i> Drag to rotate</div>
       <div class="model-glow"></div>
     </div>
@@ -147,11 +162,35 @@
 <!-- Three.js + GLTFLoader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ─── GLB 3D VIEWER ──────────────────────────────────────
+// ─── LAZY LOAD 3D VIEWER ────────────────────────────
 (function() {
   const container = document.getElementById('hero3d');
+  if (!container) return;
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        observer.disconnect();
+        loadThreeJS();
+      }
+    });
+  }, { rootMargin: '200px' });
+  observer.observe(container);
+
+  function loadThreeJS() {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    s.onload = function() {
+      const lt = document.createElement('script');
+      lt.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
+      lt.onload = initGLB;
+      document.head.appendChild(lt);
+    };
+    document.head.appendChild(s);
+  }
+
+  function initGLB() {
   const canvas = document.getElementById('glbCanvas');
-  if (!container || !canvas) return;
+  if (!canvas) return;
 
   // Scene
   const scene = new THREE.Scene();
@@ -390,6 +429,7 @@
     renderer.render(scene, camera);
   }
   animate();
+  }
 })();
 </script>
 <!-- ─── ABOUT ─────────────────────────────────────── -->
@@ -410,11 +450,11 @@
         </div>
         <div class="about-stats">
           <div class="stat">
-            <div class="stat-num">3+</div>
+            <div class="stat-num">6+</div>
             <div class="stat-label">Projects</div>
           </div>
           <div class="stat">
-            <div class="stat-num">3</div>
+            <div class="stat-num">6</div>
             <div class="stat-label">Months Exp.</div>
           </div>
           <div class="stat">
@@ -430,7 +470,7 @@
     </div>
     <div class="about-text reveal reveal-delay-2">
       <p>I'm a <strong style="color:var(--white)">Python Backend &amp; AI Developer</strong> currently pursuing my Bachelor's in Computer Science at Shree Maneklal M. Patel Institute of Science and Research (graduating 2026).</p>
-      <p>I specialize in designing scalable backend architectures, analyzing complex datasets, and building intuitive full-stack web applications. My internship at Qspiders gave me hands-on experience with real-world data workflows and Power BI automation.</p>
+      <p>I specialize in designing scalable backend architectures, analyzing complex datasets, and building intuitive full-stack web applications. Currently at Neutral Carbon Zone Ltd., I build AI-powered automation tools that drive real productivity gains across the organization.</p>
       <p>I'm passionate about writing clean, efficient code and continuously exploring the intersection of <strong style="color:var(--gold)">AI, data, and web technologies</strong>.</p>
       <div class="about-tags">
         <span class="tag">Python</span>
@@ -543,6 +583,21 @@
           <li>Engineered automated Power BI dashboards using Python, significantly reducing manual effort each week</li>
           <li>Designed modular data visualization components using Matplotlib, enhancing readability across reports</li>
           <li>Streamlined data workflows through structured cleaning and transformation pipelines</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"><i class="fas fa-robot"></i></div>
+      <div class="timeline-card">
+        <div class="timeline-meta">
+          <div class="timeline-role">AI Automation Support Specialist</div>
+          <div class="timeline-date">Jun 2026 — Present</div>
+        </div>
+        <div class="timeline-company">Neutral Carbon Zone Ltd. · Remote</div>
+        <ul class="timeline-bullets">
+          <li>Designed and deployed the Company Lookup Tool, enabling rapid retrieval of company intelligence to streamline client onboarding and research workflows</li>
+          <li>Built the Industry Categorizer, an AI-powered classification system that automatically tags companies by industry vertical, reducing manual sorting effort</li>
+          <li>Developed practical AI automation tools that boost team productivity and support data-driven decision-making across the organization</li>
         </ul>
       </div>
     </div>
