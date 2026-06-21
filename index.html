@@ -38,11 +38,18 @@
   "alumniOf": "Shree Maneklal M. Patel Institute of Science and Research"
 }
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+<!-- Page Loader -->
+<div class="page-loader" id="pageLoader">
+  <div class="loader-spinner"></div>
+</div>
 
 <!-- Progress Bar -->
 <div class="progress-bar" id="progressBar"></div>
@@ -76,6 +83,7 @@
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" onclick="closeMenu()" aria-label="Close menu">&times;</button>
   <a href="#about" onclick="closeMenu()">About</a>
   <a href="#skills" onclick="closeMenu()">Skills</a>
   <a href="#experience" onclick="closeMenu()">Experience</a>
@@ -108,7 +116,7 @@
         <span id="typewriter"></span><span class="type-cursor">|</span>
       </p>
       <div class="hero-ticker">
-        <span class="ticker-label">Now building:</span>
+        <span class="ticker-label">---</span>
         <span class="ticker-text" id="tickerText">Expense Tracker for Modern Teams</span>
       </div>
       <p class="hero-desc">
@@ -469,7 +477,7 @@
       </div>
     </div>
     <div class="about-text reveal reveal-delay-2">
-      <p>I'm a <strong style="color:var(--white)">Python Backend &amp; AI Developer</strong> currently pursuing my Bachelor's in Computer Science at Shree Maneklal M. Patel Institute of Science and Research (graduating 2026).</p>
+      <p>I'm a <strong style="color:var(--white)">Python Backend &amp; AI Developer</strong>, i have done my Bachelor's in Computer Science at Shree Maneklal M. Patel Institute of Science and Research (graduated 2026). currently pursuing Masters of Computer Applications from Marwadi University</p>
       <p>I specialize in designing scalable backend architectures, analyzing complex datasets, and building intuitive full-stack web applications. Currently at Neutral Carbon Zone Ltd., I build AI-powered automation tools that drive real productivity gains across the organization.</p>
       <p>I'm passionate about writing clean, efficient code and continuously exploring the intersection of <strong style="color:var(--gold)">AI, data, and web technologies</strong>.</p>
       <div class="about-tags">
@@ -494,19 +502,19 @@
     <div class="skill-category reveal">
       <div class="skill-cat-title"><i class="fas fa-code"></i>Programming Languages</div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">Python</span><span class="skill-pct">92%</span></div>
+        <div class="skill-header"><span class="skill-name">Python</span><span class="skill-tag">Expert</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.92"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">JavaScript</span><span class="skill-pct">78%</span></div>
+        <div class="skill-header"><span class="skill-name">JavaScript</span><span class="skill-tag" data-level="advanced">Advanced</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.78"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">SQL</span><span class="skill-pct">82%</span></div>
+        <div class="skill-header"><span class="skill-name">SQL</span><span class="skill-tag" data-level="advanced">Advanced</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.82"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">HTML / CSS</span><span class="skill-pct">80%</span></div>
+        <div class="skill-header"><span class="skill-name">HTML / CSS</span><span class="skill-tag" data-level="advanced">Advanced</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.80"></div></div>
       </div>
     </div>
@@ -514,15 +522,15 @@
     <div class="skill-category reveal reveal-delay-1">
       <div class="skill-cat-title"><i class="fas fa-layer-group"></i>Frameworks</div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">Flask</span><span class="skill-pct">88%</span></div>
+        <div class="skill-header"><span class="skill-name">Flask</span><span class="skill-tag" data-level="advanced">Advanced</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.88"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">React.js</span><span class="skill-pct">74%</span></div>
+        <div class="skill-header"><span class="skill-name">React.js</span><span class="skill-tag" data-level="proficient">Proficient</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.74"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">Node.js</span><span class="skill-pct">70%</span></div>
+        <div class="skill-header"><span class="skill-name">Node.js</span><span class="skill-tag" data-level="proficient">Proficient</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.70"></div></div>
       </div>
     </div>
@@ -530,19 +538,19 @@
     <div class="skill-category reveal reveal-delay-2">
       <div class="skill-cat-title"><i class="fas fa-chart-bar"></i>Data & Analytics</div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">Pandas</span><span class="skill-pct">86%</span></div>
+        <div class="skill-header"><span class="skill-name">Pandas</span><span class="skill-tag" data-level="advanced">Advanced</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.86"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">NumPy</span><span class="skill-pct">80%</span></div>
+        <div class="skill-header"><span class="skill-name">NumPy</span><span class="skill-tag" data-level="advanced">Advanced</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.80"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">Matplotlib</span><span class="skill-pct">78%</span></div>
+        <div class="skill-header"><span class="skill-name">Matplotlib</span><span class="skill-tag" data-level="proficient">Proficient</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.78"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">Power BI</span><span class="skill-pct">72%</span></div>
+        <div class="skill-header"><span class="skill-name">Power BI</span><span class="skill-tag" data-level="proficient">Proficient</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.72"></div></div>
       </div>
     </div>
@@ -550,15 +558,15 @@
     <div class="skill-category reveal reveal-delay-3">
       <div class="skill-cat-title"><i class="fas fa-database"></i>Databases & Tools</div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">MySQL</span><span class="skill-pct">80%</span></div>
+        <div class="skill-header"><span class="skill-name">MySQL</span><span class="skill-tag" data-level="advanced">Advanced</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.80"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">Git / GitHub</span><span class="skill-pct">76%</span></div>
+        <div class="skill-header"><span class="skill-name">Git / GitHub</span><span class="skill-tag" data-level="proficient">Proficient</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.76"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-header"><span class="skill-name">REST APIs</span><span class="skill-pct">82%</span></div>
+        <div class="skill-header"><span class="skill-name">REST APIs</span><span class="skill-tag" data-level="advanced">Advanced</span></div>
         <div class="skill-bar"><div class="skill-fill" data-width="0.82"></div></div>
       </div>
     </div>
@@ -593,7 +601,7 @@
           <div class="timeline-role">AI Automation Support Specialist</div>
           <div class="timeline-date">Jun 2026 — Present</div>
         </div>
-        <div class="timeline-company">Neutral Carbon Zone Ltd. · Remote</div>
+        <div class="timeline-company">Neutral Carbon Zone Ltd · United Kingdom </div>
         <ul class="timeline-bullets">
           <li>Designed and deployed the Company Lookup Tool, enabling rapid retrieval of company intelligence to streamline client onboarding and research workflows</li>
           <li>Built the Industry Categorizer, an AI-powered classification system that automatically tags companies by industry vertical, reducing manual sorting effort</li>
@@ -609,7 +617,7 @@
   <div class="section-label">04 — Projects</div>
   <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
   <div class="projects-grid">
-    <div class="project-card reveal">
+    <div class="project-card reveal" data-url="https://github.com/dhruvsavaliya-bot">
       <div class="project-icon"><i class="fas fa-wallet"></i></div>
       <div class="project-name">Expense Management Web App</div>
       <div class="project-desc">
@@ -628,7 +636,7 @@
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-1">
+    <div class="project-card reveal reveal-delay-1" data-url="https://github.com/dhruvsavaliya-bot">
       <div class="project-icon"><i class="fas fa-chart-line"></i></div>
       <div class="project-name">DataAnalyzer Pro</div>
       <div class="project-desc">
@@ -648,16 +656,19 @@
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-2">
+    <div class="project-card reveal reveal-delay-2" data-url="https://github.com/dhruvsavaliya-bot/ai-code-review-assistant">
       <div class="project-icon"><i class="fas fa-code-branch"></i></div>
       <div class="project-name">AI Code Review Assistant</div>
       <div class="project-desc">
-        An AI-powered code review tool that analyzes pull requests and source files to surface bugs, security risks, and style issues with actionable suggestions. Combines static analysis with LLM-driven feedback to automate routine review work and help teams ship cleaner code faster.
+        A full-featured AI-powered coding toolkit. Paste code or fetch from GitHub to get AI-driven security, performance, and complexity analysis. Run HTML/CSS/JS/React with live preview in-browser, or execute Python/Java/C++/Go/Rust/Bash server-side via Wandbox API with modal output. Generate code from natural language descriptions, modify existing code (add error handling, convert to TypeScript, etc.), browse GitHub repos and files by URL, and browse all past reviews with full CRUD support.
       </div>
       <div class="project-tech">
         <span class="tech-badge">Python</span>
         <span class="tech-badge">AI/LLM</span>
         <span class="tech-badge">TypeScript</span>
+        <span class="tech-badge">React</span>
+        <span class="tech-badge">Wandbox API</span>
+        <span class="tech-badge">GitHub API</span>
         <span class="tech-badge">HTML</span>
         <span class="tech-badge">CSS</span>
       </div>
@@ -668,7 +679,7 @@
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-3">
+    <div class="project-card reveal reveal-delay-3" data-url="https://github.com/dhruvsavaliya-bot/Fault_detection">
       <div class="project-icon"><i class="fas fa-shield-alt"></i></div>
       <div class="project-name">Fault Detection System</div>
       <div class="project-desc">
@@ -690,7 +701,7 @@
     </div>
 
     <!-- Bonus project showcase card -->
-    <div class="project-card reveal reveal-delay-4" style="border-style: dashed; background: rgba(212,168,83,0.03);">
+    <div class="project-card reveal reveal-delay-4" data-url="https://github.com/dhruvsavaliya-bot" style="border-style: dashed; background: rgba(212,168,83,0.03);">
       <div class="project-icon" style="background: rgba(0,180,216,0.1); border-color: rgba(0,180,216,0.3);">
         <i class="fas fa-rocket" style="color:var(--teal);"></i>
       </div>
@@ -762,22 +773,22 @@
   <h2 class="section-title">Milestones &amp; <span class="accent">Awards</span></h2>
   <div class="ach-grid">
     <div class="ach-card reveal">
-      <span class="ach-icon">🏆</span>
+      <span class="ach-icon"><i class="fas fa-users"></i></span>
       <div class="ach-title">Leadership Workshop Participant</div>
       <div class="ach-desc">Completed a 5-day intensive program focused on developing teamwork, confidence, and professional communication skills.</div>
     </div>
     <div class="ach-card reveal reveal-delay-1">
-      <span class="ach-icon">📊</span>
+      <span class="ach-icon"><i class="fas fa-chart-line"></i></span>
       <div class="ach-title">70% Efficiency Improvement</div>
       <div class="ach-desc">Delivered a Python data processing solution at Qspiders that boosted reporting efficiency by 70%, recognized by mentors.</div>
     </div>
     <div class="ach-card reveal reveal-delay-2">
-      <span class="ach-icon">⚡</span>
+      <span class="ach-icon"><i class="fas fa-bolt"></i></span>
       <div class="ach-title">End-to-End Automation</div>
       <div class="ach-desc">Automated full data workflows in DataAnalyzer Pro, reducing manual processing effort by 70% with a single-click pipeline.</div>
     </div>
     <div class="ach-card reveal reveal-delay-3">
-      <span class="ach-icon">🌐</span>
+      <span class="ach-icon"><i class="fas fa-globe"></i></span>
       <div class="ach-title">Trilingual Communicator</div>
       <div class="ach-desc">Proficient in English, Hindi, and Gujarati — enabling effective collaboration across diverse teams and clients.</div>
     </div>

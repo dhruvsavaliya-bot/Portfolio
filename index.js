@@ -39,8 +39,8 @@
 
   const tickerText = document.getElementById('tickerText');
   const tickerItems = [
-    'Company Lookup Tool — AI-powered company intelligence',
-    'Industry Categorizer — automatic industry classification',
+    'AI Code Review Assistant',
+    'DataAnalyzer Pro Dashboard',
     'Expense Tracker for Modern Teams',
     'Fault Detection System with ML',
   ];
